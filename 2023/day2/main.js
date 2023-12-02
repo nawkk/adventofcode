@@ -5,35 +5,40 @@ const parse = (source) => source.split(/\r?\n/).filter(Boolean);
 // const data = parse(fs.readFileSync("example.txt", "utf-8"));
 const data = parse(fs.readFileSync("input.txt", "utf-8"));
 
-const games = data.map((s) => {
-	return s.replace(/\s/g, '')
-					.substring(s.indexOf(':'))
-					.split(';')
-					.map((ss) => {
-						return ss.split(',');
-					});
-});
+function partOne(data) {
+	const games = data.map((s) => {
+		return s.replace(/\s/g, '')
+						.substring(s.indexOf(':'))
+						.split(';')
+						.map((ss) => {
+							return ss.split(',');
+						});
+	});
 
-const limit = {
-	'red': 12,
-	'green': 13,
-	'blue': 14
+	const limit = {
+		'red': 12,
+		'green': 13,
+		'blue': 14
+	}
+
+	let sum = 0;
+	games.forEach((game, gameIdx) => {
+		const pass = game.every(round => {
+			return round.every(handful => {
+				const num = handful.replace(/\D/g, '');
+				const color = handful.replace(/\d+/g, '');
+				return num <= limit[color];
+			});
+		});
+		if (pass) {
+			sum += gameIdx + 1;
+		}
+	});
+	return sum;
 }
 
-let sum = 0;
-games.forEach((game, gameIdx) => {
-	let pass = game.every(round => {
-		return round.every(handful => {
-			const num = handful.replace(/\D/g, '');
-			const color = handful.replace(/\d+/g, '');
-			return num <= limit[color];
-		});
-	});
-	if (pass) {
-		sum += gameIdx + 1;
-	}
-});
-console.log(`Sum: ${sum}`);
+console.log(`Part 1 Sum: ${partOne(data)}`);
+
 
 // grab file
 // convert file data into map
