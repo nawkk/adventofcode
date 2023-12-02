@@ -5,14 +5,11 @@ const parse = (source) => source.split(/\r?\n/).filter(Boolean);
 // const data = parse(fs.readFileSync("example.txt", "utf-8"));
 const data = parse(fs.readFileSync("input.txt", "utf-8"));
 
-const games = data.map((s) => {
-	return s.replace(/\s/g, '')
-					.substring(s.indexOf(':'))
-					.split(';')
-					.map((ss) => {
-						return ss.split(',');
-					});
-});
+const games = data
+		.map((s) => s.replace(/\s/g, '')
+		.substring(s.indexOf(':'))
+		.split(';')
+		.map((ss) => ss.split(',')));
 
 function partOne(games) {
 	const limit = {
@@ -23,13 +20,11 @@ function partOne(games) {
 
 	let sum = 0;
 	games.forEach((game, gameIdx) => {
-		const pass = game.every(round => {
-			return round.every(handful => {
+		const pass = game.every(round => round.every(handful => {
 				const num = handful.replace(/\D/g, '');
 				const color = handful.replace(/\d+/g, '');
 				return num <= limit[color];
-			});
-		});
+			}));
 		if (pass) {
 			sum += gameIdx + 1;
 		}
