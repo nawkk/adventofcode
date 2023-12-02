@@ -38,18 +38,3 @@ function partOne(data) {
 }
 
 console.log(`Part 1 Sum: ${partOne(data)}`);
-
-
-// grab file
-// convert file data into map
-
-// loop through games
-	// single game
-	// loop through game
-		// single round
-		// check each color to see if they are over the limit
-			// over limit
-				// go to next round
-		// if we finished checking each color, that means they are all under the limit
-		// add game id to the final sum
-// return sum
