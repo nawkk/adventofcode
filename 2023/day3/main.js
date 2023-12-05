@@ -5,36 +5,37 @@ const parse = (source) => source.split(/\r?\n/).filter(Boolean);
 // const data = parse(fs.readFileSync("example.txt", "utf-8"));
 const data = parse(fs.readFileSync("input.txt", "utf-8"));
 
-function partOne(data) {
-	let nums = [];
-	let map = {};
+let nums = [];
+let map = {};
 
-	data.forEach((dStr, i) => {
-		let start = -1;
-		let keys = [];
-		for (let j = 0; j < dStr.length; j++) {
-			if (!isNaN(dStr.charAt(j))) {
-				if (start === -1) {
-					start = j;
-				}
-				keys.push(i + ',' +  j);
+data.forEach((dStr, i) => {
+	let start = -1;
+	let keys = [];
+	for (let j = 0; j < dStr.length; j++) {
+		if (!isNaN(dStr.charAt(j))) {
+			if (start === -1) {
+				start = j;
 			}
-			if (isNaN(dStr.charAt(j)) || j === dStr.length-1) {
-				if (start !== -1) {
-					let num = (j === dStr.length-1) 
-						? parseInt(dStr.substring(start, j+1))
-						: parseInt(dStr.substring(start, j));
-					nums.push(num);
-					const val = nums.length - 1;
-					keys.forEach(k => {
-						map[k] = val;
-					});
-					start = -1;
-				}
-				keys = [];
-			}
+			keys.push(i + ',' +  j);
 		}
-	});
+		if (isNaN(dStr.charAt(j)) || j === dStr.length-1) {
+			if (start !== -1) {
+				let num = (j === dStr.length-1) 
+					? parseInt(dStr.substring(start, j+1))
+					: parseInt(dStr.substring(start, j));
+				nums.push(num);
+				const val = nums.length - 1;
+				keys.forEach(k => {
+					map[k] = val;
+				});
+				start = -1;
+			}
+			keys = [];
+		}
+	}
+});
+
+function partOne(data) {
 
 	let sum = 0;
 	data.forEach((dStr, i) => {
@@ -56,39 +57,10 @@ function partOne(data) {
 		}
 	});
 
-	console.log(sum);
+	return sum;
 }
 
 function partTwo(data) {
-	let nums = [];
-	let map = {};
-
-	data.forEach((dStr, i) => {
-		let start = -1;
-		let keys = [];
-		for (let j = 0; j < dStr.length; j++) {
-			if (!isNaN(dStr.charAt(j))) {
-				if (start === -1) {
-					start = j;
-				}
-				keys.push(i + ',' +  j);
-			}
-			if (isNaN(dStr.charAt(j)) || j === dStr.length-1) {
-				if (start !== -1) {
-					let num = (j === dStr.length-1) 
-						? parseInt(dStr.substring(start, j+1))
-						: parseInt(dStr.substring(start, j));
-					nums.push(num);
-					const val = nums.length - 1;
-					keys.forEach(k => {
-						map[k] = val;
-					});
-					start = -1;
-				}
-				keys = [];
-			}
-		}
-	});
 
 	let sum = 0;
 	data.forEach((dStr, i) => {
@@ -118,9 +90,8 @@ function partTwo(data) {
 		}
 	});
 
-	console.log(sum);
-
+	return sum;
 }
 
-// partOne(data);
-partTwo(data);
+// console.log(partOne(data));
+console.log(partTwo(data));
