@@ -41,6 +41,8 @@ function partOne(data) {
 
 
 
+// Re-do approach
+// Figured out the approach was incorrect
 function partTwo(data) {
 	const seeds = organizeSeedRanges(data);
 	const sections = initSections(data);
